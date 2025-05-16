@@ -5,6 +5,8 @@ let score = 0;
 const questionDisplay = document.getElementById("question");
 const answerInput = document.getElementById("answerInput");
 const feedback = document.getElementById("feedback");
+const nextBtn = document.getElementById("nextBtn");
+const speakBtn = document.getElementById("speakBtn");
 const scoreDisplay = document.getElementById("score");
 
 // Load CSV with PapaParse
@@ -27,12 +29,13 @@ function showQuestion() {
   answerInput.value = "";
   answerInput.disabled = false;
   feedback.innerHTML = "";
+  nextBtn.style.display = "none";
   answerInput.focus();
 }
 
 function showFeedback(correct, expected, userInput) {
   if (correct) {
-    feedback.innerHTML = "✅ Correct! Good job!";
+    feedback.innerHTML = "✅ 正解！Good job!";
     score++;
     scoreDisplay.textContent = "Score: " + score;
   } else {
@@ -45,28 +48,37 @@ function showFeedback(correct, expected, userInput) {
     const wrongPart = expected.slice(mismatchIndex);
 
     feedback.innerHTML = `
-      ❌ Incorrect.<br/>
-      <strong>Correct:</strong> ${expected}<br/>
-      <strong>Your answer:</strong> ${userInput}<br/>
-      <strong>Mistake at:</strong> ${correctPart}<span style="color:red">${wrongPart}</span>
+      ❌ 間違いがあります<br/>
+      <strong>正解:</strong> ${expected}<br/>
+      <strong>あなたの答え:</strong> ${userInput}<br/>
+      <strong>ここが間違い:</strong> ${correctPart}<span style="color:red">${wrongPart}</span>
     `;
   }
 
-  answerInput.disabled = true; // disable input after answer submitted
+  answerInput.disabled = true;
+  nextBtn.style.display = "inline-block";
 }
 
-// Keydown handler for Enter key
 answerInput.addEventListener("keydown", function(e) {
   if (e.key === "Enter") {
     if (answerInput.disabled) {
-      // If input disabled, move to next question on Enter
       showQuestion();
     } else {
-      // If input enabled, check answer and show feedback
       const userAnswer = answerInput.value.trim();
       const expected = currentQuestion.en.trim();
       const isCorrect = userAnswer === expected;
       showFeedback(isCorrect, expected, userAnswer);
     }
+  }
+});
+
+nextBtn.addEventListener("click", showQuestion);
+
+// 🔊 Text-to-speech
+speakBtn.addEventListener("click", function() {
+  if (currentQuestion && currentQuestion.en) {
+    const utterance = new SpeechSynthesisUtterance(currentQuestion.en);
+    utterance.lang = "en-US";
+    speechSynthesis.speak(utterance);
   }
 });
