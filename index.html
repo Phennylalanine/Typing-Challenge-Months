@@ -1,47 +1,51 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Typing Challenge</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Typing Study Game</title>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: Arial, sans-serif;
+      text-align: center;
       padding: 2em;
-      max-width: 600px;
-      margin: auto;
+      background-color: #f4f4f4;
+    }
+    #question {
+      font-size: 1.5em;
+      margin-bottom: 1em;
     }
     input {
       font-size: 1.2em;
       padding: 0.5em;
-      width: 100%;
-      margin-top: 1em;
+      width: 80%;
+      max-width: 400px;
     }
     #feedback {
       margin-top: 1em;
-      font-size: 1.1em;
+      font-size: 1.2em;
     }
     #score {
       margin-top: 2em;
       font-weight: bold;
     }
-    #nextBtn {
-      display: none !important; /* Force it hidden */
+    .highlight {
+      background-color: #ffb3b3;
+      font-weight: bold;
+      color: red;
     }
   </style>
 </head>
 <body>
-  <h1>タイピングチャレンジ</h1>
-  <p id="question">Loading...</p>
-  <input type="text" id="answerInput" placeholder="Type the English translation..." autocomplete="off" />
-  <div id="feedback"></div>
-  <button id="nextBtn">Next</button>
-  <p id="score">Score: 0</p>
 
-  <!-- PapaParse for CSV loading -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-  
-  <!-- Link to external script.js, use cache buster to force latest -->
-  <script src="script.js?v=2"></script>
+  <h1>Typing Study Game</h1>
+  <div id="question">Loading questions...</div>
+  <input type="text" id="answerInput" placeholder="Type the English answer here" autocomplete="off" disabled />
+  <div id="feedback"></div>
+  <div id="score">Score: 0</div>
+
+  <!-- PapaParse CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
