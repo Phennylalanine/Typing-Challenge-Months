@@ -1,12 +1,17 @@
 let questions = [];
 let currentQuestion = null;
 let score = 0;
+let userInteracted = false;
 
 const questionDisplay = document.getElementById("question");
 const answerInput = document.getElementById("answerInput");
 const feedback = document.getElementById("feedback");
 const nextBtn = document.getElementById("nextBtn");
 const scoreDisplay = document.getElementById("score");
+
+// Track user interaction to allow audio playback
+document.addEventListener("click", () => userInteracted = true, { once: true });
+document.addEventListener("keydown", () => userInteracted = true, { once: true });
 
 // Load CSV with PapaParse
 Papa.parse("questions.csv", {
@@ -37,8 +42,8 @@ function showQuestion() {
   nextBtn.style.display = "none";
   answerInput.focus();
 
-  // Speak the English word automatically
-  if (currentQuestion.en) {
+  // Speak the English word automatically after interaction
+  if (userInteracted && currentQuestion.en) {
     speak(currentQuestion.en);
   }
 }
@@ -84,7 +89,7 @@ answerInput.addEventListener("keydown", function(e) {
 
 nextBtn.addEventListener("click", showQuestion);
 
-// Optional: Manual speak button (if needed)
+// Optional: Manual speak button
 const speakBtn = document.getElementById("speakBtn");
 if (speakBtn) {
   speakBtn.addEventListener("click", function() {
