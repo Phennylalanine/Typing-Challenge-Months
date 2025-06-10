@@ -71,13 +71,13 @@ function updateXPDisplay() {
 }
 
 function saveProgress() {
-  localStorage.setItem("global_typing_xp", xp);
-  localStorage.setItem("global_typing_level", level);
+  localStorage.setItem("months_xp", xp);
+  localStorage.setItem("months_level", level);
 }
 
 function loadProgress() {
-  const savedXP = localStorage.getItem("global_typing_xp");
-  const savedLevel = localStorage.getItem("global_typing_level");
+ const savedXP = localStorage.getItem("months_xp");
+const savedLevel = localStorage.getItem("months_level");
   if (savedXP !== null) xp = parseInt(savedXP, 10);
   if (savedLevel !== null) level = parseInt(savedLevel, 10);
   updateScoreAndStreakDisplay();
